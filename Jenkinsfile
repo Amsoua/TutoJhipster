@@ -6,12 +6,12 @@ node {
     }
 
     stage('check java') {
-        bat "java -version"
+        sh "java -version"
     }
 
     stage('clean') {
-        bat "chmod +x mvnw"
-        bat "./mvnw clean"
+        sh "chmod +x mvnw"
+        sh "./mvnw clean"
     }
 
     stage('install tools') {
@@ -43,7 +43,7 @@ node {
     }
 
     stage('packaging') {
-        sh "./mvnw verify -Pprod -DskipTests"
+        sh "./mvnw verify deploy -Pprod -DskipTests"
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
     stage('quality analysis') {
