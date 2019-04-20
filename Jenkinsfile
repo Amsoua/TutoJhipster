@@ -6,12 +6,12 @@ node {
     }
 
     stage('check java') {
-        sh "java -version"
+        bat "java -version"
     }
 
     stage('clean') {
-        sh "chmod +x mvnw"
-        sh "./mvnw clean"
+        bat "chmod +x mvnw"
+        bat "./mvnw clean"
     }
 
     stage('install tools') {
@@ -22,32 +22,32 @@ node {
         sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm"
     }
 
-   /* stage('backend tests') {
+    stage('backend tests') {
         try {
             sh "./mvnw test"
         } catch(err) {
             throw err
-        } finally {*/
-          //  junit '**/target/surefire-reports/TEST-*.xml'
-       /* }
-    }*/
+        } finally {
+            junit '**/target/surefire-reports/TEST-*.xml'
+        }
+    }
 
-   /* stage('frontend tests') {
+    stage('frontend tests') {
         try {
             sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
         } catch(err) {
             throw err
-        } finally {*/
-          //  junit '**/target/test-results/jest/TESTS-*.xml'
-      //  }
-   // }
+        } finally {
+            junit '**/target/test-results/jest/TESTS-*.xml'
+        }
+    }
 
     stage('packaging') {
         sh "./mvnw verify -Pprod -DskipTests"
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
     stage('quality analysis') {
-        withSonarQubeEnv('sonar') {
+        withSonarQubeEnv('Sonar') {
             sh "./mvnw sonar:sonar"
         }
     }
