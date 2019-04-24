@@ -22,14 +22,14 @@ node {
         sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm"
     }
 
-    stage('backend tests') {
+    /*stage('backend tests') {
         try {
             sh "./mvnw test"
         } catch(err) {
             throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
+        } finally {*/
+           // junit '**/target/surefire-reports/TEST-*.xml'
+       /* }
     }
 
     stage('frontend tests') {
@@ -37,10 +37,10 @@ node {
             sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
         } catch(err) {
             throw err
-        } finally {
-            junit '**/target/test-results/jest/TESTS-*.xml'
-        }
-    }
+        } finally {*/
+         //   junit '**/target/test-results/jest/TESTS-*.xml'
+        //}
+  //  }
 
     stage('packaging') {
         sh "./mvnw verify deploy -Pprod -DskipTests"
